@@ -73,7 +73,7 @@ class Mailblade {
    * @param  array   $params   Parameters for the template
    * @return Template
    */
-  public function template($name=null, array $params=null)
+  public function template($name, array $params = NULL)
   {
     $this->template = Template::make($name, $params);
     return $this->template;
