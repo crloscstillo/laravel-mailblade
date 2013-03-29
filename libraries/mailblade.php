@@ -43,7 +43,11 @@ class Mailblade {
    */
   public function __construct($sending_method=null, $inbound_inbox=null)
   {
-    
+    if (! $sending_method) $sending_method = Config::get('mailblade::mailblade.sending_method');;
+    if (! $inbound_inbox) $inbound_inbox   = Config::get('mailblade::mailblade.inbound_inbox');
+
+    $this->sending_method = $sending_method;
+    $this->inbound_inbox  = $inbound_inbox; 
   }
 
   /**
@@ -55,7 +59,7 @@ class Mailblade {
    */
   public static function make($sending_method=null, $inbound_inbox=null)
   {
-    
+    return new static($sending_method, $inbound_inbox);
   }
 
   #             ~ ---------- ~              #
