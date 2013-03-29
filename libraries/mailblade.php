@@ -1,5 +1,7 @@
 <?php
 
+use Mailblade\Template as Template;
+
 /**
  * Mailblade class
  *
@@ -73,7 +75,8 @@ class Mailblade {
    */
   public function template($name=null, array $params=null)
   {
-    
+    $this->template = Template::make($name, $params);
+    return $this->template;
   }
 
   /**
