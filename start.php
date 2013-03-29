@@ -8,7 +8,7 @@
 
 # The master class
 Autoloader::map(array(
-  'Mailblade' => Bundle::path('mailblade').'libraries'.DS.'mailblade.php';
+  'Mailblade' => Bundle::path('mailblade').'libraries'.DS.'mailblade.php'
 ));
 
 # The namespace
