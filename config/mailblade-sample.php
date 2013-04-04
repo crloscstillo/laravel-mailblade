@@ -36,20 +36,27 @@ return array(
 
   /*
   |--------------------------------------------------------------------------
-  | Template name
+  | Template directory
   |--------------------------------------------------------------------------
   |
-  | Put here the name of the email template used when
-  | sending the message.
-  | You can style it at wish or just use the included message by default.
+  | Put here the name of the directory where you will be
+  | storing the email templates.
   |
-  | Contacto is aware of your application's language and
+  | Choose 'default' to use mailblade's default options.
+  | Mailblade is aware of your application's language and
   | it tracks the email templates by language.
   | So make sure you save your templates following this convention:
-  | 'contacto/templates/[language]/[template.html]'
+  |
+  | '[template_dir]/[language]/[template_name.html]'
+  |
+  | for html tempaltes. And in the same folder
+  |
+  | '[template_dir]/[language]/[template_name.txt]'
+  |
+  | for the text version.
   |
   */
  
- 'template_name' => 'contact-message',
+ 'template_dir' => 'default',
 
 );
