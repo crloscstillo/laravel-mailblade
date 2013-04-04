@@ -4,7 +4,7 @@
  * Mailblade class
  *
  * A Laravel bundle for managing your email templates
- * and sending them.
+ * using the Blade templating language.
  * 
  * @package    Mailblade
  * @author     Carlos Castillo (http://carlos.castillo.com.co)
@@ -21,10 +21,10 @@ class Mailblade {
   private $name;
 
   /**
-   * The template parameters.
+   * The template data.
    * @var array
    */
-  private $params = array();
+  private $data;
 
   /**
    * The same compiler functions used by Blade.
@@ -59,12 +59,24 @@ class Mailblade {
    * Create a new Template instance
    *
    * @param   string  $name
-   * @param   array   $params
+   * @param   array   $data
    * @return  void
    */
-  public function __construct($name, array $params = NULL)
+  public function __construct($name, $data = array())
   {
-    $this->path($name);
+    // Set name
+    $this->name = $name;
+
+    // Set data
+    $this->data = $data;
+
+    // Check for template existance
+    if (! $this->exists($name))
+    {
+      throw new \Exception("<b>Mailblade:</b> Template [$name] doesn't exist.");
+    }
+
+    
 
   }
 
@@ -72,34 +84,78 @@ class Mailblade {
    * Create a new Template instance
    * 
    * @param  string $name  
-   * @param  array  $params
+   * @param  array  $data
    * @return Template
    */
-  public static function make($name, array $params = NULL)
+  public static function make($name, $data = array())
   {
-    return new static($name, $params);
+    return new static($name, $data);
   }
 
   #             ~ ---------- ~              #
   
   /**
-   * Get path to file
-   * @param  string   $file
+   * Get the path to a given view
+   * @param  string   $view
    * @return string
    */
-  private function path($file)
+  protected function path($view)
   {
+    // Get the template directory set by the user
     $dir = Config::get('mailblade::mailblade.template_dir');
 
-    // Set the default option for templates directory
+    // If user didn't set any custom directory
+    // use Mailblade's default option
     if (! $dir OR $dir === 'default')
     {
-      $dir = Bundle::path('mailblade').'templates';
+      $dir = Bundle::path('mailblade').'templates'.DS;
     }
 
-    var_dump($dir);
+    // Mailblade is language aware
+    $lang = Config::get('application.language').DS;
+   
 
+    // Mailblade should only handle the rendering of views which
+    // end with the Blade extension.
+    if (file_exists($path = $dir.$lang.$view.BLADE_EXT))
+    {
+      return $path;
+    }
+
+    return false;
   }
   
+  /**
+   * Check that a given template exists
+   * @param   string  $view
+   * @return  bool
+   */
+  public function exists($view)
+  {
+    return $this->path($view) ? true : false;
+  }
+
+  /**
+   * Add a key / value pair to the template data.
+   *
+   * Bound data will be available to the view as variables.
+   *
+   * @param  string  $key
+   * @param  mixed   $value
+   * @return Mailblade
+   */
+  public function with($key, $value = null)
+  {
+    if (is_array($key))
+    {
+      $this->data = array_merge($this->data, $key);
+    }
+    else
+    {
+      $this->data[$key] = $value;
+    }
+
+    return $this;
+  }
 
 }
