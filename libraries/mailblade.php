@@ -111,7 +111,17 @@ class Mailblade {
    */
   public function send(array $input)
   {
-    
+    // First check if template is set
+    if (! $this->template) throw new Exception('Mailblade: An email template has not yet been set.');
+
+    // Compile template
+    $this->template->parameters($input);
+    $this->template->compile('html');
+    $this->template->compile('txt');
+
+    // Proceed to send the email message via the right method
+    $sending_method = $this->sending_method;
+    return $this->$sending_method($input);
   }
 
   #             ~ ---------- ~              #
