@@ -124,4 +124,17 @@ class Template {
     $this->$type = $content;    
   }
 
+  #             ~ ---------- ~              #
+
+  /**
+   * Get a template version
+   * 
+   * @param  string $version
+   * @return string
+   */
+  public function get($version)
+  {
+    return $this->$version;
+  }
+
 }

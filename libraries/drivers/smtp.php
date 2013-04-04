@@ -1,5 +1,7 @@
 <?php namespace Mailblade\Drivers;
 
+use \Config;
+
 /**
  * A simple SMTP class with a fresh start.
  *

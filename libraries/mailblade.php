@@ -1,6 +1,7 @@
 <?php
 
 use Mailblade\Template as Template;
+use Mailblade\Drivers\SMTP as SMTP;
 
 /**
  * Mailblade class
@@ -27,6 +28,25 @@ class Mailblade {
    * @var string
    */
   private $inbound_inbox;
+
+  /**
+   * The from address
+   * 
+   * @var string
+   */
+  private $from;
+
+  /**
+   * The reply-to email address
+   * @var strinf
+   */
+  private $reply;
+
+  /**
+   * The subject of the message
+   * @var string
+   */
+  private $subject;
   
   /**
    * Email template used for the message
@@ -104,6 +124,41 @@ class Mailblade {
   }
 
   /**
+   * Set from email address
+   * @param  string     $email
+   * @return Mailblade
+   */
+  public function from($email)
+  {
+    $this->from = $email;
+    return $this;
+  }
+
+  /**
+   * Set reply-to address
+   * @param  string      $email
+   * @return Mailblade
+   */
+  public function reply($email)
+  {
+    $this->reply = $email;
+    return $this;
+  }
+
+  /**
+   * Set message subject
+   * @param  string      $subject
+   * @return Mailblade
+   */
+  public function subject($subject)
+  {
+    $this->subject = $subject;
+    return $this;
+  }
+
+  #             ~ ---------- ~              #
+
+  /**
    * Send email message
    * 
    * @param   array   $input
@@ -134,7 +189,21 @@ class Mailblade {
    */
   public function smtp(array $input)
   {
+    // Convert to individual variables
+    extract($input);
 
+    // Attempt to send the message
+    $smtp = new SMTP;
+    $smtp->to($this->inbound_inbox);
+    $smtp->body($this->template->get('html'));
+    $smtp->text($this->template->get('txt'));
+
+    // Set this only if needed
+    if ($this->from) $smtp->from($this->from);
+    if ($this->reply) $smtp->reply($this->reply);
+    if ($this->subject) $smtp->subject($this->subject);
+
+    return $smtp->send();
   }
 
   /**
