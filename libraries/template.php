@@ -105,4 +105,23 @@ class Template {
     return $this;
   }
 
+  /**
+   * Compile the email template specific version
+   *
+   * @param   string     $version   Template version (html|txt)
+   * @return  Mailblade
+   */
+  public function compile($type)
+  {
+    $content = $this->$type;
+    $params  = $this->params;
+
+    foreach ($params as $param => $value) {
+      $content = str_replace('{{'.$param.'}}', $value, $content);
+      $content = str_replace('{{ '.$param.' }}', $value, $content);
+    }
+
+    $this->$type = $content;    
+  }
+
 }
