@@ -15,6 +15,18 @@
 class Mailblade {
 
   /**
+   * The template name.
+   * @var string
+   */
+  private $name;
+
+  /**
+   * The template parameters.
+   * @var array
+   */
+  private $params = array();
+
+  /**
    * The same compiler functions used by Blade.
    *
    * @var array
@@ -52,6 +64,7 @@ class Mailblade {
    */
   public function __construct($name, array $params = NULL)
   {
+    $this->path($name);
 
   }
 
@@ -68,5 +81,25 @@ class Mailblade {
   }
 
   #             ~ ---------- ~              #
+  
+  /**
+   * Get path to file
+   * @param  string   $file
+   * @return string
+   */
+  private function path($file)
+  {
+    $dir = Config::get('mailblade::mailblade.template_dir');
+
+    // Set the default option for templates directory
+    if (! $dir OR $dir === 'default')
+    {
+      $dir = Bundle::path('mailblade').'templates';
+    }
+
+    var_dump($dir);
+
+  }
+  
 
 }
