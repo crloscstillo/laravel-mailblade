@@ -84,7 +84,7 @@ class Mailblade {
 
     if (! $this->path)
     {
-      // throw new \Exception("<b>Mailblade:</b> Template [$name] doesn't exist.");
+      throw new \Exception("<b>Mailblade:</b> Template [$name] doesn't exist.");
     }
 
   }
