@@ -64,6 +64,30 @@ class Mailblade {
     return new static($sending_method, $inbound_inbox);
   }
 
+  /**
+   * Set the sending method
+   * 
+   * @param  string       $method
+   * @return Mailblade
+   */
+  public function sending_method($method)
+  {
+    $this->sending_method = $method;
+    return $this;
+  }
+
+  /**
+   * Set the inbound inbox
+   * 
+   * @param  string      $inbox
+   * @return Mailblade
+   */
+  public function inbound_inbox($inbox)
+  {
+    $this->inbound_inbox = $inbox;
+    return $this;
+  }
+
   #             ~ ---------- ~              #
   
   /**
