@@ -74,9 +74,7 @@ class Mailblade {
     if (! $this->exists($name))
     {
       throw new \Exception("<b>Mailblade:</b> Template [$name] doesn't exist.");
-    }
-
-    
+    }   
 
   }
 
@@ -90,6 +88,16 @@ class Mailblade {
   public static function make($name, $data = array())
   {
     return new static($name, $data);
+  }
+
+  /**
+   * Check that a given template exists
+   * @param   string  $view
+   * @return  bool
+   */
+  public function exists($view)
+  {
+    return $this->path($view) ? true : false;
   }
 
   #             ~ ---------- ~              #
@@ -124,16 +132,6 @@ class Mailblade {
 
     return false;
   }
-  
-  /**
-   * Check that a given template exists
-   * @param   string  $view
-   * @return  bool
-   */
-  public function exists($view)
-  {
-    return $this->path($view) ? true : false;
-  }
 
   /**
    * Add a key / value pair to the template data.
@@ -156,6 +154,27 @@ class Mailblade {
     }
 
     return $this;
+  }
+
+  #             ~ ---------- ~              #
+
+  /**
+   * Get the array of template data for the template instance.
+   *
+   * It is also possible to get just one key of the data array
+   * by passing the $key parameter
+   *
+   * @param   string  $key
+   * @return  mixed
+   */
+  public function data($key = null)
+  {
+    if ($key)
+    {
+      return $this->data[$key];
+    }
+    
+    return $this->data;
   }
 
 }
