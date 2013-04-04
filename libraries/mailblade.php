@@ -16,15 +16,24 @@ class Mailblade {
 
   /**
    * The template name.
+   * 
    * @var string
    */
   private $name;
 
   /**
    * The template data.
+   * 
    * @var array
    */
   private $data;
+
+  /**
+   * The path to the template on disk.
+   *
+   * @var string
+   */
+  private $path;
 
   /**
    * The same compiler functions used by Blade.
@@ -70,11 +79,13 @@ class Mailblade {
     // Set data
     $this->data = $data;
 
-    // Check for template existance
-    if (! $this->exists($name))
+    // Set path
+    $this->path = $this->path($name);
+
+    if (! $this->path)
     {
-      throw new \Exception("<b>Mailblade:</b> Template [$name] doesn't exist.");
-    }   
+      // throw new \Exception("<b>Mailblade:</b> Template [$name] doesn't exist.");
+    }
 
   }
 
@@ -103,6 +114,18 @@ class Mailblade {
   #             ~ ---------- ~              #
   
   /**
+   * Compiles the file containing Blade pseudo-code into valid PHP.
+   * @param  [type] $view [description]
+   * @return [type]       [description]
+   */
+  public function compile($view)
+  {
+
+  }
+
+  #             ~ ---------- ~              #
+  
+  /**
    * Get the path to a given view
    * @param  string   $view
    * @return string
@@ -121,6 +144,9 @@ class Mailblade {
 
     // Mailblade is language aware
     $lang = Config::get('application.language').DS;
+
+    // We also use the 'dot' notation for specifying file locations
+    $view = str_replace('.', '/', $view);
    
 
     // Mailblade should only handle the rendering of views which
@@ -173,7 +199,7 @@ class Mailblade {
     {
       return $this->data[$key];
     }
-    
+
     return $this->data;
   }
 
