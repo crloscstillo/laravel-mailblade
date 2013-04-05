@@ -153,10 +153,42 @@ class Mailblade {
     return $this->data;
   }
 
+  /**
+   * Return html version of the template
+   * 
+   * @return string
+   */
   public function html()
   {
-    $lang = Config::get('application.language');
-    $view = View::make();
+    // Name of the template
+    $view = 'mailblade::'.$this->lang.'.'.$this->view;
+
+    return View::make($view)
+      ->with($this->data)
+      ->render();
+  }
+
+  /**
+   * Return text version of the template
+   * 
+   * @return string
+   */
+  public function text()
+  {
+    // Directory
+    $dir = Bundle::path('mailblade').'views'.DS;
+    
+    // File
+    $file = $dir.$this->lang.DS.$this->view.'.txt';
+
+    if (! file_exists($file))
+    {
+      throw new \Exception("<b>Mailblade:</b> Text version for the template [$this->view] wasn't found.");
+    }
+
+    // Run blade compilers on the text version
+    $compiled = Blade::compile_string(file_get_contents($file));
+
   }
 
 }
