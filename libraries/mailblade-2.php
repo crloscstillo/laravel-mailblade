@@ -15,86 +15,78 @@
 class Mailblade {
 
   /**
-   * The template view.
+   * The template name.
    * 
    * @var string
    */
-  private $view;
+  private $name;
 
   /**
    * The template data.
    * 
    * @var array
    */
-  private $data;
+  private $view;
 
-  #             ~ ---------- ~              #
+  /**
+   * The path to the template on disk.
+   *
+   * @var string
+   */
+  private $path;
+
+  /**
+   * Template compiled into valid PHP
+   * 
+   * @var string
+   */
+  private $compiled;
 
   /**
    * Create a new Mailblade instance
    *
-   * @param   string  $view
+   * @param   string  $name
    * @param   array   $data
    * @return  void
    */
-  public function __construct($view, $data = array())
+  public function __construct($name, $data = array())
   {
-    // Set view
-    $this->view = $view;
+    // Set name
+    $this->name = $name;
 
     // Set data
     $this->data = $data;
 
-    // Check for existance
-    if (! $this->exists())
+    // Set path
+    $this->path = $this->path($name);
+
+    if (! $this->path)
     {
-      throw new \Exception("<b>Mailblade:</b> Template [$view] doesn't exist.");
+      throw new \Exception("<b>Mailblade:</b> Template [$name] doesn't exist.");
     }
   }
 
   /**
    * Create a new Mailblade instance
-   *
-   * @param   string     $view
-   * @param   array      $data
-   * @return  Mailblade
+   * 
+   * @param  string $name  
+   * @param  array  $data
+   * @return Template
    */
-  public static function make($view, $data = array())
+  public static function make($name, $data = array())
   {
-    return new static($view, $data);
+    return new static($name, $data);
   }
 
-  #             ~ ---------- ~              #
-  
   /**
    * Check that a given template exists
-   * 
+   * @param   string  $view
    * @return  bool
    */
-  public function exists()
+  public function exists($view)
   {
-    // Get the template directory
-    $dir = Bundle::path('mailblade').'views'.DS;
-
-    // Mailblade is language aware
-    $lang = Config::get('application.language').DS;
-
-    // Name of the view file
-    $view = $this->view;
-
-    if (file_exists($dir.$lang.$view.EXT))
-    {
-      return true;
-    }
-    elseif (file_exists($dir.$lang.$view.BLADE_EXT))
-    {
-      return true;
-    }
-
-    return false;
+    return $this->path($view) ? true : false;
   }
-
-  #             ~ ---------- ~              #
 
   /**
    * Add a key / value pair to the template data.
