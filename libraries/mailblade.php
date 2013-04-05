@@ -22,6 +22,13 @@ class Mailblade {
   private $view;
 
   /**
+   * The template language
+   * 
+   * @var string
+   */
+  private $lang;
+
+  /**
    * The template data.
    * 
    * @var array
@@ -41,6 +48,9 @@ class Mailblade {
   {
     // Set view
     $this->view = $view;
+
+    // Set language
+    $this->lang = Config::get('application.language');
 
     // Set data
     $this->data = $data;
@@ -77,10 +87,13 @@ class Mailblade {
     $dir = Bundle::path('mailblade').'views'.DS;
 
     // Mailblade is language aware
-    $lang = Config::get('application.language').DS;
+    $lang = $this->lang.DS;
 
     // Name of the view file
     $view = $this->view;
+
+    // We use Laravel's dot notation
+    $view = str_replace('.', '/', $view);
 
     if (file_exists($dir.$lang.$view.EXT))
     {
@@ -138,6 +151,12 @@ class Mailblade {
     }
 
     return $this->data;
+  }
+
+  public function html()
+  {
+    $lang = Config::get('application.language');
+    $view = View::make();
   }
 
 }
