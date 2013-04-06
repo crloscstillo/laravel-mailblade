@@ -1,7 +1,7 @@
 Mailblade
 =========
 
-Mailblade lets you manage your email templates easily and without hassle.
+Mailblade lets you manage your email templates easily and without hassle.  
 You can use the powerful Blade templating engine inside your emails.
 
 ## Install it
