@@ -124,6 +124,9 @@ class Mailblade {
   public function text()
   {
     // Implement text rendering
+    return Mailblade\Text::make($this->view)
+      ->with($this->data)
+      ->render();
   }
 
 }
