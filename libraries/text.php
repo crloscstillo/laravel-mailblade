@@ -15,7 +15,7 @@ use \Laravel\Bundle;
 class Text extends View {
 
    /**
-   * Determine if the given view exists.
+   * Determine if the given text view exists.
    *
    * @param  string       $view
    * @param  boolean      $return_path
@@ -26,26 +26,59 @@ class Text extends View {
     // Get the template directory
     $dir = Config::get('mailblade::options.template_dir');
 
-    if (! $dir OR $dir === 'default')
+    // Use custom templates folder if found
+    if (! empty($dir))
     {
-      $dir = Bundle::path('mailblade').'templates'.DS;
+      $path = static::custom_path($view, $dir);
+    }
+    else
+    {
+      // If there is no custom folder, use Mailblade's default
+      $dir = $dir = Bundle::path('mailblade').'views'.DS;
+      // Mailblade is language-aware
+      $lang = Config::get('application.language').DS;
+
+      $view = str_replace('.', '/', $view);
+
+      // Determine the path ourselves
+      $path = file_exists($dir.$lang.$view.TXT_EXT)
+        ? $dir.$lang.$view.TXT_EXT
+        : null;
     }
 
-    // Mailblade is language aware
+    if (! is_null($path))
+    {
+      return $return_path ? $path : true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Get the custom path to a given text view on disk.
+   * 
+   * @param  string $view
+   * @param  string $view
+   * @return string
+   */
+  protected static function custom_path($view, $dir)
+  {
+    // Get application language
     $lang = Config::get('application.language').DS;
 
-    // We use Laravel's dot notation for specifying file paths
+    // We use Laravel's date(format)ot notation for file paths
     $view = str_replace('.', '/', $view);
+
+    $dir = $dir.DS;
 
     // Full path
     $path = $dir.$lang.$view;
 
-    if (file_exists($path = $dir.$lang.$view.BLADE_TXT))
+    if (file_exists($path = $dir.$lang.$view.TXT_EXT))
     {
-      return $return_path ? $path : true;
+      return $path;
     }
-    
+
     return false;
   }
-
 }

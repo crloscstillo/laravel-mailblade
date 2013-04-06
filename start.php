@@ -16,5 +16,5 @@ Autoloader::namespaces(array(
   'Mailblade' => Bundle::path('mailblade').'libraries',
 ));
 
-# Allow Blade to use text files
-define('BLADE_TXT', '.txt.php');
+# Use php on text files
+define('TXT_EXT', '.txt.php');
