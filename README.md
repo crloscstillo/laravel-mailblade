@@ -37,3 +37,13 @@ For the text version:
 ```php
 $txt = Mailblade->text();
 ```
+
+## Configuration
+Mailblade views are different to 'regular' Laravel Views in two ways:
+1. You choose the default folder for your templates.
+2. They are language-aware
+
+Let us explain...
+
+### 1. The template directory
+Views in laravel usually follow a convention: They have to be placed inside your `application/views` directory
