@@ -5,6 +5,15 @@ use \Laravel\Bundle;
 use \Laravel\Session;
 use \Laravel\Messages;
 
+/**
+ * View class
+ * 
+ * @package    Mailblade
+ * @author     Carlos Castillo (http://carlos.castillo.com.co)
+ * @link       https://github.com/crlosmify/laravel-mailblade
+ * @license    MIT License
+ */
+
 class View extends \Laravel\View {
 
   /**
