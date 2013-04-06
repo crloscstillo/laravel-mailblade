@@ -18,5 +18,4 @@ xcuserdata
 CVS
 
 # specific files
-config/mailblade.php
-config/smtp.php
+config/options.php
