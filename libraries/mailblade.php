@@ -22,13 +22,6 @@ class Mailblade {
   private $view;
 
   /**
-   * The template language
-   * 
-   * @var string
-   */
-  private $lang;
-
-  /**
    * The template data.
    * 
    * @var array
@@ -49,17 +42,8 @@ class Mailblade {
     // Set view
     $this->view = $view;
 
-    // Set language
-    $this->lang = Config::get('application.language');
-
     // Set data
     $this->data = $data;
-
-    // Check for existance
-    if (! $this->exists())
-    {
-      throw new \Exception("<b>Mailblade:</b> Template [$view] doesn't exist.");
-    }
   }
 
   /**
@@ -72,39 +56,6 @@ class Mailblade {
   public static function make($view, $data = array())
   {
     return new static($view, $data);
-  }
-
-  #             ~ ---------- ~              #
-  
-  /**
-   * Check that a given template exists
-   * 
-   * @return  bool
-   */
-  public function exists()
-  {
-    // Get the template directory
-    $dir = Bundle::path('mailblade').'views'.DS;
-
-    // Mailblade is language aware
-    $lang = $this->lang.DS;
-
-    // Name of the view file
-    $view = $this->view;
-
-    // We use Laravel's dot notation
-    $view = str_replace('.', '/', $view);
-
-    if (file_exists($dir.$lang.$view.EXT))
-    {
-      return true;
-    }
-    elseif (file_exists($dir.$lang.$view.BLADE_EXT))
-    {
-      return true;
-    }
-
-    return false;
   }
 
   #             ~ ---------- ~              #
@@ -160,10 +111,7 @@ class Mailblade {
    */
   public function html()
   {
-    // Name of the template
-    $view = 'mailblade::'.$this->lang.'.'.$this->view;
-
-    return View::make($view)
+    return Mailblade\View::make($this->view)
       ->with($this->data)
       ->render();
   }
@@ -175,20 +123,7 @@ class Mailblade {
    */
   public function text()
   {
-    // Directory
-    $dir = Bundle::path('mailblade').'views'.DS;
     
-    // File
-    $file = $dir.$this->lang.DS.$this->view.'.txt';
-
-    if (! file_exists($file))
-    {
-      throw new \Exception("<b>Mailblade:</b> Text version for the template [$this->view] wasn't found.");
-    }
-
-    // Run blade compilers on the text version
-    $compiled = Blade::compile_string(file_get_contents($file));
-
   }
 
 }
