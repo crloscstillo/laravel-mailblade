@@ -123,7 +123,7 @@ class Mailblade {
    */
   public function text()
   {
-    
+    // Implement text rendering
   }
 
 }
