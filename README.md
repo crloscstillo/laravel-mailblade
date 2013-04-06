@@ -90,8 +90,17 @@ You can even preview the messages if you do something like this in your routes f
 ```php
 Route::get('preview', function()
 {
-  return Mailblade::make('your-template');
+  return Mailblade::make('your-template')->html();
 }
 ```
 
-*(Templates are on the way and will be pushed soon)*
+Of for the text version
+
+```php
+Route::get('preview', function()
+{
+  return Mailblade::make('your-template')->text();
+}
+```
+
+**Note:** *(Templates are on the way and will be pushed soon)*
