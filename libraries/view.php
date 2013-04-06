@@ -72,7 +72,7 @@ class View extends \Laravel\View {
       return $path;
     }
     
-    throw new \Exception("<b>Mailblade:</b> Template [$view] doesn't exist in the specified folder.");
+    throw new \Exception("<b>Mailblade:</b> HTML version for the template [$view] doesn't exist in the specified folder.");
   }
 
   /**

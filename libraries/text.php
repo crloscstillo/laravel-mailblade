@@ -54,6 +54,22 @@ class Text extends View {
     return false;
   }
 
+    /**
+   * Get the path to a given view on disk.
+   *
+   * @param  string  $view
+   * @return string
+   */
+  protected function path($view)
+  {
+    if ($path = $this->exists($view, true))
+    {
+      return $path;
+    }
+    
+    throw new \Exception("<b>Mailblade:</b> Text version for the template [$view] doesn't exist in the specified folder.");
+  }
+
   /**
    * Get the custom path to a given text view on disk.
    * 
