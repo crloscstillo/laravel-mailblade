@@ -85,4 +85,13 @@ The best thing about Mailblade is that it comes with templates for sending commo
 * Password restore
 * User confirmations
 
-(Templates are on the way and will be pushed soon)
+You can even preview the messages if you do something like this in your routes files:
+
+```php
+Route::get('preview', function()
+{
+  return Mailblade::make('your-template');
+}
+```
+
+*(Templates are on the way and will be pushed soon)*
