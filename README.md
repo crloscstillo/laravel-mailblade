@@ -1,8 +1,9 @@
 Mailblade
 =========
 
-Mailblade lets you manage your email templates easily and without hassle.  
-You can use the powerful Blade templating engine inside your emails.
+Mailblade is a Laravel plugin that lets you manage your email templates in Laravel easily and without hassle.
+You can use the powerful Blade templating engine inside your emails for your html templates.  
+**IMPORTANT:** For the text version of the templates we stick with regular php.
 
 ## Install it
 Via Laravel's very own **artisan** tool:  
@@ -59,11 +60,9 @@ Mailblade views are different to your *'regular'* Laravel Views in two ways:
 Let us explain...
 
 ### 1. The template directory
-Views in laravel usually follow a convention: They have to be placed inside your `application/views` directory
-or inside your `[bundle]/views` directory in case of bundles.  
-With Mailblade that is **not the case**. There are no conventions and you **choose in which folder your template files will be located**.
+By default, Mailblade chooses your email template from the `mailblade/views`folder.  
+You can **choose any folder you want for your template files** by going into `mailblade/config/options.php` file.
 
-That being said though, Mailblade does provide a default option, which is inside the `mailblade/templates` folder.
 
 ### 2. Language-aware
 Mailblade chooses the appropriate template based on your application language.  
@@ -78,3 +77,12 @@ So, for example, the english version of the *'contact-message'* template sould b
 ```php
 mailblade/templates/en/contact-message
 ```
+
+## Give me some templates
+The best thing about Mailblade is that it comes with templates for sending commonly used email messages, like:
+
+* Contact form
+* Password restore
+* User confirmations
+
+(Templates are on the way and will be pushed soon)
