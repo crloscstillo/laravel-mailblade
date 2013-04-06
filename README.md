@@ -94,7 +94,7 @@ Route::get('preview', function()
 }
 ```
 
-Of for the text version
+Or for the text version
 
 ```php
 Route::get('preview', function()
