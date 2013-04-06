@@ -11,7 +11,7 @@ Here are the details...
 Message
 ------------------------
 
-{{ message }}
+<?php echo($message); ?>
 
 
 
@@ -19,6 +19,6 @@ Message
 ------------------------
 Information
 ------------------------
-Name: {{ name }}
-Email: {{ email }}
-Phone: {{ phone }}
+Name: <?php echo($name); ?>
+Email: <?php echo($email); ?>
+Phone: <?php echo($phone); ?>
