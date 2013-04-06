@@ -23,8 +23,19 @@ You handle it as you handle any view in Laravel:
 
 ```php
 $message = Mailblade::make('password-restore');
-$message->with('email', 'email@somewhere.com')
-$message->with('key', 'Fhgns7396&%dj');
+$message->with('email', 'example@email.com')
+$message->with('key', 'Fhgns7396&-21dj');
+```
+
+Or even like this:
+
+```php
+$input = array(
+  'email' => 'example@email.com',
+  'key'   => 'Fhgns7396&-21dj'
+);
+
+$message = Mailblade::make('password-restore', $input);
 ```
 
 To see the html version of a template simply do:
